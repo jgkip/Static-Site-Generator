@@ -11,16 +11,12 @@ def main():
     pd = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     pd += '\\tests\\test.md'
     f = open(pd, "r")
-    #print(f.read())
-    #print(pd)
-    #print('-----------------------') 
+    
     #convert md to html
     lines = f.readlines()
     c = 0
     body = ''
-    for line in lines:
-        #c += 1
-        #print("{}: {}".format(c,line))
+    for line in lines: 
         header = ''
         #depending on tags, convert to corresponding html tag 
         if line.count('#') == 1:
