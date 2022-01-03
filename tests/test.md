@@ -1,7 +1,16 @@
-# This is a Header
+# My Static Site Generator
 
-## This is a sub-header
+## Tests 
 
-Create static site generator. This is regular text. 
+Create static site generator. This is regular text.
 
+So far everything seems to work okay.
 
+##What is a Static Site Generator? 
+
+A static site generator (SSG) takes a markdown file as input
+and generates a static webpage from it. 
+
+##Conclusion
+
+TBD

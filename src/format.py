@@ -1,6 +1,5 @@
-import os
-from format import process
-import sys
+import os 
+
 
 tags = {
         '#' : ('<h1>', '</h1>'),
@@ -9,10 +8,9 @@ tags = {
 
 
 
-def main():
-    '''
+def process(name):
     pd = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    pd += '\\tests\\test.md'
+    pd += '\\tests\\' + name
     f = open(pd, "r")
     
     #convert md to html
@@ -32,7 +30,7 @@ def main():
             header = '<p>' + line.rstrip() + '</p>'
             #print(header)
         body += header + '\n'
-    '''
+    
     html = '''
         <html>
             <head>
@@ -47,23 +45,9 @@ def main():
                 {} 
             </body>
         </html>
-        '''#.format("'Roboto Mono'", body)
-    '''
+        '''.format("'Roboto Mono'", body)
     hf = open('index.html', 'w')
     hf.write(html)
     hf.close()
     f.close()
-    #print(html)
-    print('Finished conversion')
-    '''
-    try:
-        process(sys.argv[1])
-    except FileNotFoundError as err:
-        print(err)
-        sys.exit(0)
-    print('Finished conversion')
-
-
-
-if __name__ == '__main__':
-    main()
+    
