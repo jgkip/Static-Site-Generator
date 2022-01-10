@@ -30,8 +30,33 @@ def text_mod(line):
             
     return h
 
+def gen_html(font, b):
+    
+    res = '''
+        <html>
+            <head>
+                <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
+                <style>
+                    html * {{
+                        font-family: {};
+                    }}
+                </style>
+            </head>
+            <body>
+                {} 
+            </body>
+        </html>
+        '''.format(font, b)
+
+    return res 
+
+def gen_list(line):
+    if bool(re.match(r"- (.*?)", line)):
+        pass
+
 #TODO: Better way to handle header tags (other tags, too)
 #TODO: italics, bold/italics combo, lists
+#TODO: linked pages(?) 
 def process(name):
     pd = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     pd += '\\tests\\' + name
@@ -55,21 +80,7 @@ def process(name):
 
         body += header + '\n'
     
-    html = '''
-        <html>
-            <head>
-                <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
-                <style>
-                    html * {{
-                        font-family: {};
-                    }}
-                </style>
-            </head>
-            <body>
-                {} 
-            </body>
-        </html>
-        '''.format("'Roboto Mono'", body)
+    html = gen_html("'Roboto Mono'", body)
     hf = open('index.html', 'w')
     hf.write(html)
     hf.close()
