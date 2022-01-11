@@ -3,8 +3,15 @@ import re
 
 tags = {
         '#' : ('<h1>', '</h1>'),
-        '##' : ('<h2>', '</h2>')
+        '##' : ('<h2>', '</h2>'),
+        ('__', '**') : ('<b>', '</b>')
         }
+
+pattern_underscore = '__(.*?)__'
+pattern_double_ast = '[*]{2}(.*?)[*]{2}'
+
+pattern_ital_one = ''
+pattern_ital_two = ''
 
 def headers(line):
     if line.count('#') == 1:
@@ -15,11 +22,22 @@ def headers(line):
         #print(header)
     return h 
 
-def text_mod(line):
-    if bool(re.match(r"__(.*?)__", line)) or bool(re.match(r"[*]{2}(.*?)[*]{2}", line)): #change this to match exactly 2 *
+
+def convert_bold(m):
+    if m.group(1) is not None:
+        return '<b>' + m.group(1) + '</b>'
+    if m.group(2) is not None:
+        return '<b>' + m.group(2) + '</b>'
+
+#TODO: Optimize... (O(n^2))?
+def text_mod(line):    
+    #if bool(re.fullmatch(pattern_underscore, line)) or bool(re.fullmatch(pattern_double_ast, line)):
+    if bool(re.match(pattern_underscore, line)) or bool(re.match(pattern_double_ast, line)): #change to fullmatch
             h = '<p><b>'+line[2:len(line)-3]+'</b></p>'
             return h
     
+    #replace substring with <b>substring</b>
+    #h = re.sub(r'[*]{2}(.*?)[*]{2} |__(.*?)__ ', convert_bold, line)
     wlist = line.split()
     for i in range(len(wlist)):
         if bool(re.match(r"__(.*?)__", wlist[i])) or bool(re.match(r"[*]{2}(.*?)[*]{2}", wlist[i])):  
@@ -27,11 +45,18 @@ def text_mod(line):
             wlist[i] = '<b>' + wlist[i][2:len(wlist[i])-2] + '</b>'
 
     h = ' '.join([str(e) for e in wlist])
-            
+         
     return h
 
-def gen_html(font, b):
-    
+def text_ital(line):
+    pass
+
+#get file location
+def hyper_link(line):
+    #print(line[2:len(line)-6]+'.html')
+    return '<a href="' + line[2:len(line)-6] + '.html' + '" target="_blank">' + line[2:len(line)-6] + '</a>'
+
+def gen_html(font, b):    
     res = '''
         <html>
             <head>
@@ -58,14 +83,15 @@ def gen_list(line):
 #TODO: italics, bold/italics combo, lists
 #TODO: linked pages(?) 
 def process(name):
-    pd = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    pd += '\\tests\\' + name
-    f = open(pd, "r")
+    #pd = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    #pd += '\\tests\\' + name
+    f = open(name, "r")
     
     #convert md to html
     lines = f.readlines()
     c = 0
     body = ''
+    #print(name)
     for line in lines: 
         header = ''
         #depending on tags, convert to corresponding html tag 
@@ -74,15 +100,16 @@ def process(name):
         elif line.count('#') == 0 and line.isspace() != True: 
             if '**' in line or '__' in line:
                 header = text_mod(line)
+            elif '[[' in line:
+                header = hyper_link(line)
             else:
                 header = '<p>' + line.rstrip() + '</p>'
 
-
         body += header + '\n'
+    fn = name.split("\\")[len(name.split("\\"))-1]
     
     html = gen_html("'Roboto Mono'", body)
-    hf = open('index.html', 'w')
+    hf = open(fn[:fn.index('.md')]+'.html', 'w')
     hf.write(html)
     hf.close()
     f.close()
-    
