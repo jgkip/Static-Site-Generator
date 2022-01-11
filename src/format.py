@@ -106,11 +106,10 @@ def process(name):
                 header = '<p>' + line.rstrip() + '</p>'
 
         body += header + '\n'
-    fn = name.split("\\")[len(name.split("\\"))-1]
-    
+
+    fn = name.split("\\")[-1] 
     html = gen_html("'Roboto Mono'", body)
     outpath = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + '\\output\\'
-    print(outpath)
     hf = open(outpath+fn[:fn.index('.md')]+'.html', 'w')
     hf.write(html)
     hf.close()
