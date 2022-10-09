@@ -14,7 +14,7 @@ This SSG takes a directory of markdown files (they should be related) and constr
 
 **To use:**
 
-- Input files should be in their own directory i.e. `tests` or name of your choice
-  **NOTE:** 'tests' in the filepath specified in `main.py` should be changed if you use a different directory 
+- Input files should be in their own directory i.e. 'tests' or name of your choice
+  **NOTE:** `tests` in the filepath specified in `main.py` should be changed if you use a different directory 
 - Use `python main.py` to run 
 - Resulting HTML will be pushed to output folder 
