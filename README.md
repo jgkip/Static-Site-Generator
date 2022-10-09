@@ -16,5 +16,5 @@ This SSG takes a directory of markdown files and constructs their corresponding 
 
 - Input files should be in their own directory i.e. 'tests' or name of your choice
   **NOTE:** `tests` in the filepath specified in `main.py` should be changed if you use a different directory 
-- Use `python main.py` to run 
+- cd into `src` and run `python main.py`
 - Resulting HTML will be pushed to output folder 
