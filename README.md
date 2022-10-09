@@ -10,7 +10,7 @@ A static site generator constructs static webpages from some input data. This SS
 
 Due to its simplicity, this generator should only be used to create blogs and very basic websites (if that's your jam). 
 
-This SSG takes a directory of markdown files (they should be related) and constructs HTML that links them together as a website.
+This SSG takes a directory of markdown files and constructs their corresponding HTML. 
 
 **To use:**
 
