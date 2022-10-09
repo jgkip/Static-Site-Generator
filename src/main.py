@@ -6,16 +6,8 @@ import timeit
 import time
 
 def main():
-    '''    
     try:
-        process(sys.argv[1])
-    except FileNotFoundError as err:
-        print(err)
-        sys.exit(0)
-    #print('Finished conversion')
-    '''
-    try:
-        path = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + '\\tests\\'
+        path = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + '\\tests\\' # change 'tests' to directory where input files are stored
         files = gen_file_list(path)
         for f in files:
             #print(f)
